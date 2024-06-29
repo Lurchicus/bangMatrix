@@ -2,7 +2,7 @@
 
 By Dan Rhea 2020 Licensed under the MIT license
 
-I was finally able to trach this program down on one of my backups.
+I was finally able to track this program down on one of my backups.
 
 This program simulates the way a mine sweeper game would populate
 its game map. Nithing serious, just a fun exercise while I was 
