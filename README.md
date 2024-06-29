@@ -6,7 +6,7 @@ I was finally able to track this program down on one of my backups.
 
 This program simulates the way a mine sweeper game would populate
 its game map. Nothing serious, just a fun exercise while I was 
-learning Python. It's designed to run un a command shell in 
+learning Python. It's designed to run on a command shell in 
 Windows or Linux. 
 
 At some point I will go back through it and modernize the code.
