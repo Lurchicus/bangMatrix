@@ -4,10 +4,10 @@
 # salted with mines. This map can then be fed to a
 # ML process to solve
 from random import randint
-from colorama import init, Fore, Back
-import os
-import sys
-import platform
+from colorama import Fore, Back
+# import os
+# import sys
+# import platform
 
 # Determine the map dimensions and set the count of mines we will scatter over it to
 # 15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of 
