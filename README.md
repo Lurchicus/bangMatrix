@@ -10,3 +10,8 @@ learning Python. It's designed to run on a command shell in
 Windows or Linux. 
 
 At some point I will go back through it and modernize the code.
+
+## Dependencies
+
+- colorama import Fore, Back
+- random import randint
