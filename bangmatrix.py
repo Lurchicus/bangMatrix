@@ -150,6 +150,6 @@ print(Fore.WHITE + "*:" + str(realmine) + "(" + str(round((realmine / (nodes) * 
     Fore.LIGHTRED_EX + "3:" + str(num3) + Fore.WHITE + "(" + str(round((num3 / (nodes) * 100),2)) + "%) " +
     Fore.LIGHTYELLOW_EX + "4:" + str(num4) + Fore.WHITE + "(" + str(round((num4 / (nodes) * 100),2)) + "%) " +
     Fore.LIGHTCYAN_EX + "5:" + str(num5) + Fore.WHITE + "(" + str(round((num5 / (nodes) * 100),2)) + "%) " +
-    Fore.MAGENTA + "6:" + str(num6) + Fore.WHITE + "(" + str(round((num6 / (nodes) * 100),2)) + "%) " +
+    Fore.LIGHTMAGENTA_EX + "6:" + str(num6) + Fore.WHITE + "(" + str(round((num6 / (nodes) * 100),2)) + "%) " +
     Fore.GREEN + "7:" + str(num7) + Fore.WHITE + "(" + str(round((num7 / (nodes) * 100),2)) + "%) " +
     Fore.RED + "8:" + str(num8) + Fore.WHITE + "(" + str(round((num8 / (nodes) * 100),2)) + "%)" + Fore.WHITE)
