@@ -15,3 +15,10 @@ At some point I will go back through it and modernize the code.
 
 - colorama import Fore, Back
 - random import randint
+
+## History
+
+- Added the project to GitHub
+- Converted a large if block into a match-case block
+- Added a docstring to the program
+- Removed zombie code
