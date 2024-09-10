@@ -18,8 +18,9 @@ At some point I will go back through it and modernize the code.
 
 ## History
 
-- Added the project to GitHub
-- Converted a large if block into a match-case block
-- Added a docstring to the program
-- Removed zombie code
-- Changed magenta to light magenta as magenta was not very visible
+- 06/29/2024 DWR Added the project to GitHub
+- 09/07/2024 DWR Converted a large if block into a match-case block
+- 09/07/2024 DWR Added a docstring to the program
+- 09/07/2024 DWR Removed zombie code
+- 09/07/2024 DWR Changed magenta to light magenta as magenta was not very visible
+- 09/09/2024 DWR Cleaned up the background handling as colorama thinks black is gray

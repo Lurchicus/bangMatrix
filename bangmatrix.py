@@ -23,7 +23,7 @@ print(Back.BLACK + Fore.GREEN + "Rows: "+str(rows)+
     " cols: "+str(cols)+
     " mine: "+str(mine)+
     " is "+str(round(perc,2))+
-    "% (target: "+str(round(cPer,2))+"%)."+Fore.WHITE + Back.BLACK)
+    "% (target: "+str(round(cPer,2))+"%)."+Fore.WHITE + Back.RESET)
 
 bangbox = [[0 for col in range(cols)] for row in range(rows)]
 
@@ -79,19 +79,22 @@ for row in range(rows):
 
 # Output the minefield
 print(Fore.GREEN + "Revealed map:" + Fore.WHITE)
+
 # Build and output the column header 
-firstDigit = Back.BLACK + "     " + Fore.YELLOW
-secondDigit = Back.BLACK + "     " + Fore.YELLOW
+firstDigit = "     " + Fore.YELLOW
+secondDigit = "     " + Fore.YELLOW
 for col in range(cols):
     scol = str(col)
     if col < 10:
         scol = "0" + scol
     firstDigit += scol[0:1] + " "
     secondDigit += scol[1:2] + " "
-print(firstDigit + " " + Back.BLACK + " ")
-print(secondDigit + " " + Back.BLACK + " ")
-orow = Back.BLACK + "   "+ Fore.GREEN + "╔" + "══"*(col+1) + "═╗" + Back.BLACK + " "
+print(firstDigit + "  ")
+print(secondDigit + "  ")
+
+orow = "   "+ Fore.GREEN + "╔" + "══"*(col+1) + "═╗ "
 print(orow)
+
 # And now the rest of the map
 realmine = 0
 num0 = num1 = num2 = num3 = num4 = num5 = num6 = num7 = num8 = 0
@@ -100,7 +103,7 @@ for row in range(rows):
     srow = str(row)
     if len(srow) == 1:
         srow = "0" + srow
-    orow = Back.BLACK + Fore.YELLOW + srow + Fore.GREEN + " ║ "
+    orow = Fore.YELLOW + srow + Fore.GREEN + " ║ "
     # then the mines. BangBox: -1 mine, 0 open, 1-8 open next to a mine
     for col in range(cols):
         node = bangbox[row][col]
@@ -135,9 +138,9 @@ for row in range(rows):
             case 8:
                 orow += Fore.RED + str(node) + " " + Fore.WHITE
                 num8 += 1
-    orow += Fore.GREEN + "║" + Back.BLACK + " "
+    orow += Fore.GREEN + "║ "
     print(orow)
-orow = Back.BLACK + "   "+ Fore.GREEN + "╚" + "══"*(cols) + "═╝" + Back.BLACK + " "
+orow = "   "+ Fore.GREEN + "╚" + "══"*(cols) + "═╝ "
 print(orow)
 
 # Toss out some statistics because we can
