@@ -9,6 +9,54 @@ just show the minefield we create.
 from random import randint
 from colorama import Fore, Back
 
+
+def look_around(bangbox: list[list[int]], rows: int, cols: int):
+    """
+    look_around()
+    Scan the field for mines and set ajacent counts
+    """
+    row = col = 0
+    for row in range(rows):
+        for col in range(cols):
+            # If we aren't a mine, look around us to see how many mines are next to us.
+            # Just make sure we don't look past the map edges
+            if bangbox[row][col] >= 0:
+                mines = 0
+                # North
+                if row - 1 >= 0:
+                    if bangbox[row-1][col] == -1:
+                        mines += 1
+                # Northeast
+                if row - 1 >= 0 and col + 1 <= cols-1:
+                    if bangbox[row-1][col+1] == -1:
+                        mines += 1
+                # East
+                if col + 1 <= cols-1:
+                    if bangbox[row][col+1] == -1:
+                        mines += 1
+                # SouthEast
+                if row + 1 <= rows-1 and col + 1 <= cols-1:
+                    if bangbox[row+1][col+1] == -1:
+                        mines += 1
+                # South
+                if row + 1 <= rows-1:
+                    if bangbox[row+1][col] == -1:
+                        mines += 1
+                # Southwest
+                if row + 1 <= rows-1 and col - 1 >= 0:
+                    if bangbox[row+1][col-1] == -1:
+                        mines += 1
+                # West
+                if col - 1 >= 0:
+                    if bangbox[row][col-1] == -1:
+                        mines += 1
+                # Northwest
+                if row - 1 >= 0 and col - 1 >= 0:
+                    if bangbox[row-1][col-1] == -1:
+                        mines += 1
+                bangbox[row][col] = mines
+
+
 # Determine the map dimensions and set the count of mines we will scatter over it to
 # 15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of 
 # mine coverage we will be working with to double check the coverage.
@@ -36,46 +84,7 @@ while set_mine < mine:
         bangbox[row_i][col_i] = -1
         set_mine += 1
 
-# Scan the field for mines and save detections
-for row in range(rows):
-    for col in range(cols):
-        # If we aren't a mine, look around us to see how many mines are next to us.
-        # Just make sure we don't look past the map edges
-        if bangbox[row][col] >= 0:
-            mines = 0
-            # North
-            if row - 1 >= 0:
-                if bangbox[row-1][col] == -1:
-                    mines += 1
-            # Northeast
-            if row - 1 >= 0 and col + 1 <= cols-1:
-                if bangbox[row-1][col+1] == -1:
-                    mines += 1
-            # East
-            if col + 1 <= cols-1:
-                if bangbox[row][col+1] == -1:
-                    mines += 1
-            # SouthEast
-            if row + 1 <= rows-1 and col + 1 <= cols-1:
-                if bangbox[row+1][col+1] == -1:
-                    mines += 1
-            # South
-            if row + 1 <= rows-1:
-                if bangbox[row+1][col] == -1:
-                    mines += 1
-            # Southwest
-            if row + 1 <= rows-1 and col - 1 >= 0:
-                if bangbox[row+1][col-1] == -1:
-                    mines += 1
-            # West
-            if col - 1 >= 0:
-                if bangbox[row][col-1] == -1:
-                    mines += 1
-            # Northwest
-            if row - 1 >= 0 and col - 1 >= 0:
-                if bangbox[row-1][col-1] == -1:
-                    mines += 1
-            bangbox[row][col] = mines
+look_around(bangbox, rows, cols)
 
 # Output the minefield
 print(Fore.GREEN + "Revealed map:" + Fore.WHITE)
