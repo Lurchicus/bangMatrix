@@ -25,4 +25,4 @@ At some point I will go back through it and modernize the code.
 - 09/07/2024 DWR Changed magenta to light magenta as magenta was not very visible
 - 09/09/2024 DWR Cleaned up the background handling as colorama thinks black is gray
 - 09/10/2024 DWR Removed two more Back references (background color) and tweaked some wording
-- 09/10/2024 DWR Moved the logic for setting the count in cells ajacent to one or more mines
+- 09/10/2024 DWR Moved the logic for setting the count in cells ajacent to one or more mines into a function
