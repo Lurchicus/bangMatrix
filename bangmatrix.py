@@ -65,7 +65,7 @@ cols = randint(10,62)
 cPer = 15.21
 # mine count should be ~15.21% of rows*cols
 mine = int(round(((rows*cols) / (100/cPer)), 0))
-perc = (mine / (rows*cols) * 100)
+perc = ((mine / (rows*cols)) * 100)
 
 print(Fore.GREEN + "Rows: "+str(rows)+
     " cols: "+str(cols)+
@@ -84,6 +84,7 @@ while set_mine < mine:
         bangbox[row_i][col_i] = -1
         set_mine += 1
 
+# Scan the field for mines and set ajacent counts
 look_around(bangbox, rows, cols)
 
 # Output the minefield
