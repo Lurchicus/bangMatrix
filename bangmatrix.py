@@ -19,11 +19,11 @@ cPer = 15.21
 mine = int(round(((rows*cols) / (100/cPer)), 0))
 perc = (mine / (rows*cols) * 100)
 
-print(Back.BLACK + Fore.GREEN + "Rows: "+str(rows)+
+print(Fore.GREEN + "Rows: "+str(rows)+
     " cols: "+str(cols)+
     " mine: "+str(mine)+
     " is "+str(round(perc,2))+
-    "% (target: "+str(round(cPer,2))+"%)."+Fore.WHITE + Back.RESET)
+    "% (target: "+str(round(cPer,2))+"%)."+Fore.WHITE)
 
 bangbox = [[0 for col in range(cols)] for row in range(rows)]
 
@@ -145,7 +145,7 @@ print(orow)
 
 # Toss out some statistics because we can
 nodes = rows*cols    
-print(Fore.GREEN + "Actual mines is " + str(realmine) + " of " + str(nodes) + " points is " + str(round(perc,2)) + "% coverage." + Fore.WHITE)
+print(Fore.GREEN + "Actual mine count is " + str(realmine) + " of " + str(nodes) + " points is " + str(round(perc,2)) + "% coverage." + Fore.WHITE)
 print(Fore.WHITE + "*:" + str(realmine) + "(" + str(round((realmine / (nodes) * 100),2)) + ")" +
     " :" + str(num0) + "(" + str(round((num0 / (nodes) * 100),2)) + "%) " + 
     Fore.LIGHTBLUE_EX + "1:" + str(num1) + Fore.WHITE + "(" + str(round((num1 / (nodes) * 100),2)) + "%) " +
