@@ -66,9 +66,10 @@ cPer: float = 15.21
 # mine count should be ~15.21% of rows*cols (or very close to it)
 mine: int = int(round(((rows*cols) / (100/cPer)), 0))
 perc: float = ((mine / (rows*cols)) * 100)
+# Create the field
 bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
 
-# Create a minefield
+# Scatter mines in the field
 set_mine: int = 0
 while set_mine < mine:
     row_i: int = randint(0, rows-1)
@@ -92,8 +93,8 @@ for col in range(cols):
         scol = f"0{scol}"
     firstDigit += f"{scol[0:1]} "
     secondDigit += f"{scol[1:2]} "
-print(firstDigit + "  ")
-print(secondDigit + "  ")
+print(f"{firstDigit}  ")
+print(f"{secondDigit}  ")
 
 orow: str = f"   {Fore.GREEN}╔{"══"*(col+1)}═╗ "
 print(orow)
