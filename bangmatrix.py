@@ -70,7 +70,8 @@ perc: float = ((mine / (rows*cols)) * 100)
 #print(Fore.GREEN + "Rows: "+str(rows)+
 #    " cols: "+str(cols)+
 #    " mine: "+str(mine)+
-#    " is "+str(round(perc,2))+
+#
+#     " is "+str(round(perc,2))+
 #    "% (target: "+str(round(cPer,2))+"%)."+Fore.WHITE)
 
 bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
@@ -94,7 +95,7 @@ print(Fore.GREEN + "Revealed map:" + Fore.WHITE)
 firstDigit: str = "     " + Fore.YELLOW
 secondDigit: str = "     " + Fore.YELLOW
 for col in range(cols):
-    scol = str(col)
+    scol: str = str(col)
     if col < 10:
         scol = "0" + scol
     firstDigit += scol[0:1] + " "
