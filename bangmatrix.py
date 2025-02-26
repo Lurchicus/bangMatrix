@@ -10,7 +10,7 @@ from random import randint
 from colorama import Fore, Back
 
 
-def look_around(bangbox: list[list[int]], rows: int, cols: int):
+def look_around(bangbox: list[list[int]], rows: int, cols: int) -> None:
     """
     look_around()
     Scan the field for mines and set ajacent counts
@@ -60,26 +60,26 @@ def look_around(bangbox: list[list[int]], rows: int, cols: int):
 # Determine the map dimensions and set the count of mines we will scatter over it to
 # 15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of 
 # mine coverage we will be working with to double check the coverage.
-rows = randint(6,34)
-cols = randint(10,62)
-cPer = 15.21
+rows: int = randint(6,34)
+cols: int = randint(10,62)
+cPer: float = 15.21
 # mine count should be ~15.21% of rows*cols
-mine = int(round(((rows*cols) / (100/cPer)), 0))
-perc = ((mine / (rows*cols)) * 100)
+mine: int = int(round(((rows*cols) / (100/cPer)), 0))
+perc: float = ((mine / (rows*cols)) * 100)
 
-print(Fore.GREEN + "Rows: "+str(rows)+
-    " cols: "+str(cols)+
-    " mine: "+str(mine)+
-    " is "+str(round(perc,2))+
-    "% (target: "+str(round(cPer,2))+"%)."+Fore.WHITE)
+#print(Fore.GREEN + "Rows: "+str(rows)+
+#    " cols: "+str(cols)+
+#    " mine: "+str(mine)+
+#    " is "+str(round(perc,2))+
+#    "% (target: "+str(round(cPer,2))+"%)."+Fore.WHITE)
 
-bangbox = [[0 for col in range(cols)] for row in range(rows)]
+bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
 
 # Create a minefield
-set_mine = 0
+set_mine: int = 0
 while set_mine < mine:
-    row_i = randint(0, rows-1)
-    col_i = randint(0, cols-1)
+    row_i: int = randint(0, rows-1)
+    col_i: int = randint(0, cols-1)
     if bangbox[row_i][col_i] == 0:
         bangbox[row_i][col_i] = -1
         set_mine += 1
@@ -91,8 +91,8 @@ look_around(bangbox, rows, cols)
 print(Fore.GREEN + "Revealed map:" + Fore.WHITE)
 
 # Build and output the column header 
-firstDigit = "     " + Fore.YELLOW
-secondDigit = "     " + Fore.YELLOW
+firstDigit: str = "     " + Fore.YELLOW
+secondDigit: str = "     " + Fore.YELLOW
 for col in range(cols):
     scol = str(col)
     if col < 10:
