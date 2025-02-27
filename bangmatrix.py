@@ -57,6 +57,54 @@ def look_around(bangbox: list[list[int]], rows: int, cols: int) -> None:
                 bangbox[row][col] = mines
 
 
+def get_rows(num: list[int], node: int) -> str:
+    """
+    Build a row of the minefield and collect minefield stats
+    """
+    orow_: str = ""
+    match node:
+        case -1:
+            orow_ += f"{Fore.WHITE}* {Fore.WHITE}"
+        case 0:
+            orow_ += "  "
+            num[0] += 1
+        case 1:
+            orow_ += f"{Fore.LIGHTBLUE_EX}{str(node)} {Fore.WHITE}"
+            num[1] += 1
+        case 2:
+            orow_ += f"{Fore.LIGHTGREEN_EX}{str(node)} {Fore.WHITE}"
+            num[2] += 1
+        case 3:
+            orow_ += f"{Fore.LIGHTRED_EX}{str(node)} {Fore.WHITE}"
+            num[3] += 1
+        case 4:
+            orow_ += f"{Fore.LIGHTYELLOW_EX}{str(node)} {Fore.WHITE}"
+            num[4] += 1
+        case 5:
+            orow_ += f"{Fore.LIGHTCYAN_EX}{str(node)} {Fore.WHITE}"
+            num[5] += 1
+        case 6:
+            orow_ += f"{Fore.LIGHTMAGENTA_EX}{str(node)} {Fore.WHITE}"
+            num[6] += 1
+        case 7:
+            orow_ += f"{Fore.GREEN}{str(node)} {Fore.WHITE}"
+            num[7] += 1
+        case 8:
+            orow_ += f"{Fore.RED}{str(node)} {Fore.WHITE}"
+            num[8] += 1
+    return orow_
+
+
+def get_mines(node_: int) -> int:
+    """
+    Collect mine info
+    """
+    realmine_: int = 0
+    if node_ == -1:
+        realmine_ += 1
+    return realmine_
+
+
 # Determine the map dimensions and set the count of mines we will scatter over it to
 # 15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of 
 # mine coverage we will be working with to double check the coverage.
@@ -66,6 +114,7 @@ cPer: float = 15.21
 # mine count should be ~15.21% of rows*cols (or very close to it)
 mine: int = int(round(((rows*cols) / (100/cPer)), 0))
 perc: float = ((mine / (rows*cols)) * 100)
+
 # Create the field
 bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
 
@@ -96,12 +145,13 @@ for col in range(cols):
 print(f"{firstDigit}  ")
 print(f"{secondDigit}  ")
 
+# build the top border
 orow: str = f"   {Fore.GREEN}╔{"══"*(col+1)}═╗ "
 print(orow)
 
-# And now the rest of the map
+# And now build the rows (and get stats)
 realmine: int = 0
-num0 = num1 = num2 = num3 = num4 = num5 = num6 = num7 = num8 = 0
+num: list[int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 for row in range(rows):
     # column header
     srow: str = str(row)
@@ -111,54 +161,28 @@ for row in range(rows):
     # then the mines. BangBox: -1 mine, 0 open, 1-8 open next to a mine
     for col in range(cols):
         node: int = bangbox[row][col]
-        match node:
-            case -1:
-                orow += f"{Fore.WHITE}* {Fore.WHITE}"
-                realmine += 1
-            case 0:
-                orow += "  "
-                num0 += 1
-            case 1:
-                orow += f"{Fore.LIGHTBLUE_EX}{str(node)} {Fore.WHITE}"
-                num1 += 1
-            case 2:
-                orow += f"{Fore.LIGHTGREEN_EX}{str(node)} {Fore.WHITE}"
-                num2 += 1
-            case 3:
-                orow += f"{Fore.LIGHTRED_EX}{str(node)} {Fore.WHITE}"
-                num3 += 1
-            case 4:
-                orow += f"{Fore.LIGHTYELLOW_EX}{str(node)} {Fore.WHITE}"
-                num4 += 1
-            case 5:
-                orow += f"{Fore.LIGHTCYAN_EX}{str(node)} {Fore.WHITE}"
-                num5 += 1
-            case 6:
-                orow += f"{Fore.LIGHTMAGENTA_EX}{str(node)} {Fore.WHITE}"
-                num6 += 1
-            case 7:
-                orow += f"{Fore.GREEN}{str(node)} {Fore.WHITE}"
-                num7 += 1
-            case 8:
-                orow += f"{Fore.RED}{str(node)} {Fore.WHITE}"
-                num8 += 1
+        orow += get_rows(num, node)
+        realmine += get_mines(node)
     orow += f"{Fore.GREEN}║ "
     print(orow)
+# Build the bottom border
 orow = f"   {Fore.GREEN}╚{"══"*(cols)}═╝ "
 print(orow)
 
-# Toss out some statistics because we can
+# Toss out some statistics, because we can
 nodes: int = rows*cols
 orow = f"{Fore.GREEN}Actual mine count is {str(realmine)} of {str(nodes)} points is {str(round(perc,2))}% coverage.{Fore.WHITE}" 
 print(orow)
+
+# Show stats for the entire field
 orow = f"{Fore.WHITE}*:{str(realmine)}({str(round((realmine / (nodes) * 100),2))}%) "
-orow += f"\' \':{str(num0)}({str(round((num0 / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTBLUE_EX}1:{str(num1)}{Fore.WHITE}({str(round((num1 / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTGREEN_EX}2:{str(num2)}{Fore.WHITE}({str(round((num2 / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTRED_EX}3:{str(num3)}{Fore.WHITE}({str(round((num3 / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTYELLOW_EX}4:{str(num4)}{Fore.WHITE}({str(round((num4 / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTCYAN_EX}5:{str(num5)}{Fore.WHITE}({str(round((num5 / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTMAGENTA_EX}6:{str(num6)}{Fore.WHITE}({str(round((num6 / (nodes) * 100),2))}%) "
-orow += f"{Fore.GREEN}7:{str(num7)}{Fore.WHITE}({str(round((num7 / (nodes) * 100),2))}%) "
-orow += f"{Fore.RED}8:{str(num8)}{Fore.WHITE}({str(round((num8 / (nodes) * 100),2))}%)"
+orow += f"\' \':{str(num[0])}({str(round((num[0] / (nodes) * 100),2))}%) "
+orow += f"{Fore.LIGHTBLUE_EX}1:{str(num[1])}{Fore.WHITE}({str(round((num[1] / (nodes) * 100),2))}%) "
+orow += f"{Fore.LIGHTGREEN_EX}2:{str(num[2])}{Fore.WHITE}({str(round((num[2] / (nodes) * 100),2))}%) "
+orow += f"{Fore.LIGHTRED_EX}3:{str(num[3])}{Fore.WHITE}({str(round((num[3] / (nodes) * 100),2))}%) "
+orow += f"{Fore.LIGHTYELLOW_EX}4:{str(num[4])}{Fore.WHITE}({str(round((num[4] / (nodes) * 100),2))}%) "
+orow += f"{Fore.LIGHTCYAN_EX}5:{str(num[5])}{Fore.WHITE}({str(round((num[5] / (nodes) * 100),2))}%) "
+orow += f"{Fore.LIGHTMAGENTA_EX}6:{str(num[6])}{Fore.WHITE}({str(round((num[6] / (nodes) * 100),2))}%) "
+orow += f"{Fore.GREEN}7:{str(num[7])}{Fore.WHITE}({str(round((num[7] / (nodes) * 100),2))}%) "
+orow += f"{Fore.RED}8:{str(num[8])}{Fore.WHITE}({str(round((num[8] / (nodes) * 100),2))}%)"
 print(orow)
