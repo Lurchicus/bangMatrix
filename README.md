@@ -31,3 +31,4 @@ At some point I will go back through it and modernize the code.
 - 02/26/2025 DWR Removed the inital output line describing mine coverage as it's redundant.
 - 02/26/2025 DWR Switched to using format strings (print(f"foo:{foo}")).
 - 02/27/2025 DWR Refactored a few chunks of code into functions and updated a few comments
+- 02/27/2025 DWR Moved the main part of the program into a main() function

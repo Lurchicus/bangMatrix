@@ -104,85 +104,89 @@ def get_mines(node_: int) -> int:
         realmine_ += 1
     return realmine_
 
+def main() -> None:
+    # Determine the map dimensions and set the count of mines we will scatter over it to
+    # 15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of 
+    # mine coverage we will be working with to double check the coverage.
+    rows: int = randint(6,34)
+    cols: int = randint(10,62)
+    cPer: float = 15.21
+    # mine count should be ~15.21% of rows*cols (or very close to it)
+    mine: int = int(round(((rows*cols) / (100/cPer)), 0))
+    perc: float = ((mine / (rows*cols)) * 100)
 
-# Determine the map dimensions and set the count of mines we will scatter over it to
-# 15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of 
-# mine coverage we will be working with to double check the coverage.
-rows: int = randint(6,34)
-cols: int = randint(10,62)
-cPer: float = 15.21
-# mine count should be ~15.21% of rows*cols (or very close to it)
-mine: int = int(round(((rows*cols) / (100/cPer)), 0))
-perc: float = ((mine / (rows*cols)) * 100)
+    # Create the field
+    bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
 
-# Create the field
-bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
+    # Scatter mines in the field
+    set_mine: int = 0
+    while set_mine < mine:
+        row_i: int = randint(0, rows-1)
+        col_i: int = randint(0, cols-1)
+        if bangbox[row_i][col_i] == 0:
+            bangbox[row_i][col_i] = -1
+            set_mine += 1
 
-# Scatter mines in the field
-set_mine: int = 0
-while set_mine < mine:
-    row_i: int = randint(0, rows-1)
-    col_i: int = randint(0, cols-1)
-    if bangbox[row_i][col_i] == 0:
-        bangbox[row_i][col_i] = -1
-        set_mine += 1
+    # Scan the field for mines and set ajacent counts
+    look_around(bangbox, rows, cols)
 
-# Scan the field for mines and set ajacent counts
-look_around(bangbox, rows, cols)
+    # Output the minefield
+    print(f"{Fore.GREEN}Revealed map:{Fore.WHITE}")
 
-# Output the minefield
-print(f"{Fore.GREEN}Revealed map:{Fore.WHITE}")
-
-# Build and output the column header
-firstDigit: str = f"     {Fore.YELLOW}"
-secondDigit: str = f"     {Fore.YELLOW}"
-for col in range(cols):
-    scol: str = str(col)
-    if col < 10:
-        scol = f"0{scol}"
-    firstDigit += f"{scol[0:1]} "
-    secondDigit += f"{scol[1:2]} "
-print(f"{firstDigit}  ")
-print(f"{secondDigit}  ")
-
-# build the top border
-orow: str = f"   {Fore.GREEN}╔{"══"*(col+1)}═╗ "
-print(orow)
-
-# And now build the rows (and get stats)
-realmine: int = 0
-num: list[int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-for row in range(rows):
-    # column header
-    srow: str = str(row)
-    if len(srow) == 1:
-        srow = f"0{srow}"
-    orow = f"{Fore.YELLOW}{srow}{Fore.GREEN} ║ "
-    # then the mines. BangBox: -1 mine, 0 open, 1-8 open next to a mine
+    # Build and output the column header
+    firstDigit: str = f"     {Fore.YELLOW}"
+    secondDigit: str = f"     {Fore.YELLOW}"
     for col in range(cols):
-        node: int = bangbox[row][col]
-        orow += get_rows(num, node)
-        realmine += get_mines(node)
-    orow += f"{Fore.GREEN}║ "
+        scol: str = str(col)
+        if col < 10:
+            scol = f"0{scol}"
+        firstDigit += f"{scol[0:1]} "
+        secondDigit += f"{scol[1:2]} "
+    print(f"{firstDigit}  ")
+    print(f"{secondDigit}  ")
+
+    # build the top border
+    orow: str = f"   {Fore.GREEN}╔{"══"*(col+1)}═╗ "
     print(orow)
-# Build the bottom border
-orow = f"   {Fore.GREEN}╚{"══"*(cols)}═╝ "
-print(orow)
 
-# Toss out some statistics, because we can
-nodes: int = rows*cols
-orow = f"{Fore.GREEN}Actual mine count is {str(realmine)} of {str(nodes)} points is {str(round(perc,2))}% coverage.{Fore.WHITE}" 
-print(orow)
+    # And now build the rows (and get stats)
+    realmine: int = 0
+    num: list[int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    for row in range(rows):
+        # column header
+        srow: str = str(row)
+        if len(srow) == 1:
+            srow = f"0{srow}"
+        orow = f"{Fore.YELLOW}{srow}{Fore.GREEN} ║ "
+        # then the mines. BangBox: -1 mine, 0 open, 1-8 open next to a mine
+        for col in range(cols):
+            node: int = bangbox[row][col]
+            orow += get_rows(num, node)
+            realmine += get_mines(node)
+        orow += f"{Fore.GREEN}║ "
+        print(orow)
+        
+    # Build the bottom border
+    orow = f"   {Fore.GREEN}╚{"══"*(cols)}═╝ "
+    print(orow)
 
-# Show stats for the entire field
-orow = f"{Fore.WHITE}*:{str(realmine)}({str(round((realmine / (nodes) * 100),2))}%) "
-orow += f"\' \':{str(num[0])}({str(round((num[0] / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTBLUE_EX}1:{str(num[1])}{Fore.WHITE}({str(round((num[1] / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTGREEN_EX}2:{str(num[2])}{Fore.WHITE}({str(round((num[2] / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTRED_EX}3:{str(num[3])}{Fore.WHITE}({str(round((num[3] / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTYELLOW_EX}4:{str(num[4])}{Fore.WHITE}({str(round((num[4] / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTCYAN_EX}5:{str(num[5])}{Fore.WHITE}({str(round((num[5] / (nodes) * 100),2))}%) "
-orow += f"{Fore.LIGHTMAGENTA_EX}6:{str(num[6])}{Fore.WHITE}({str(round((num[6] / (nodes) * 100),2))}%) "
-orow += f"{Fore.GREEN}7:{str(num[7])}{Fore.WHITE}({str(round((num[7] / (nodes) * 100),2))}%) "
-orow += f"{Fore.RED}8:{str(num[8])}{Fore.WHITE}({str(round((num[8] / (nodes) * 100),2))}%)"
-print(orow)
+    # Toss out some statistics, because we can
+    nodes: int = rows*cols
+    orow = f"{Fore.GREEN}Actual mine count is {str(realmine)} of {str(nodes)} points is {str(round(perc,2))}% coverage.{Fore.WHITE}" 
+    print(orow)
+
+    # Show stats for the entire field
+    orow = f"{Fore.WHITE}*:{str(realmine)}({str(round((realmine / (nodes) * 100),2))}%) "
+    orow += f"\' \':{str(num[0])}({str(round((num[0] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.LIGHTBLUE_EX}1:{str(num[1])}{Fore.WHITE}({str(round((num[1] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.LIGHTGREEN_EX}2:{str(num[2])}{Fore.WHITE}({str(round((num[2] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.LIGHTRED_EX}3:{str(num[3])}{Fore.WHITE}({str(round((num[3] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.LIGHTYELLOW_EX}4:{str(num[4])}{Fore.WHITE}({str(round((num[4] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.LIGHTCYAN_EX}5:{str(num[5])}{Fore.WHITE}({str(round((num[5] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.LIGHTMAGENTA_EX}6:{str(num[6])}{Fore.WHITE}({str(round((num[6] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.GREEN}7:{str(num[7])}{Fore.WHITE}({str(round((num[7] / (nodes) * 100),2))}%) "
+    orow += f"{Fore.RED}8:{str(num[8])}{Fore.WHITE}({str(round((num[8] / (nodes) * 100),2))}%)"
+    print(orow)
+
+if __name__ == '__main__':
+    main()
