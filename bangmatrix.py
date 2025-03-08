@@ -104,10 +104,27 @@ def get_mines(node_: int) -> int:
         realmine_ += 1
     return realmine_
 
+
+def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]):
+        """
+        Spread the mines around the field
+        """
+        set_mine: int = 0
+        while set_mine < mine:
+            row_i: int = randint(0, rows-1)
+            col_i: int = randint(0, cols-1)
+            if bangbox[row_i][col_i] == 0:
+                bangbox[row_i][col_i] = -1
+                set_mine += 1
+        return set_mine
+
+
 def main() -> None:
-    # Determine the map dimensions and set the count of mines we will scatter over it to
-    # 15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of 
-    # mine coverage we will be working with to double check the coverage.
+    """
+    Determine the map dimensions and set the count of mines we will scatter over it to
+    15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of
+    mine coverage we will be working with to double check the coverage.
+    """
     rows: int = randint(6,34)
     cols: int = randint(10,62)
     cPer: float = 15.21
@@ -119,13 +136,7 @@ def main() -> None:
     bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
 
     # Scatter mines in the field
-    set_mine: int = 0
-    while set_mine < mine:
-        row_i: int = randint(0, rows-1)
-        col_i: int = randint(0, cols-1)
-        if bangbox[row_i][col_i] == 0:
-            bangbox[row_i][col_i] = -1
-            set_mine += 1
+    scatter_mines(mine, rows, cols, bangbox)
 
     # Scan the field for mines and set ajacent counts
     look_around(bangbox, rows, cols)
