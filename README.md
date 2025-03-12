@@ -5,9 +5,9 @@ By Dan Rhea 2020 Licensed under the MIT license
 I was finally able to track this program down on one of my backups.
 
 This program simulates the way a mine sweeper game would populate
-its game map. Nothing serious, just a fun exercise while I was 
-learning Python. It's designed to run on a command shell in 
-Windows or Linux. 
+its game map. Nothing serious, just a fun exercise while I was
+learning Python. It's designed to run on a command shell in
+Windows or Linux.
 
 At some point I will go back through it and modernize the code.
 
@@ -33,3 +33,4 @@ At some point I will go back through it and modernize the code.
 - 02/27/2025 DWR Refactored a few chunks of code into functions and updated a few comments
 - 02/27/2025 DWR Moved the main part of the program into a main() function.
 - 03/08/2025 DWR Some more refactoring (moved code from main to scatter_mines).
+- 03/12/2025 DWR Some more comment cleanup.

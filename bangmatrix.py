@@ -107,7 +107,11 @@ def get_mines(node_: int) -> int:
 
 def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]):
         """
-        Spread the mines around the field
+        Spread the mines around the field.
+        mine: int                - The number of mines to scatter
+        rows: int                - The depth of field
+        cols: int                - The width of the field
+        bangbox: list[list[int]] - the field where we will scatter mines
         """
         set_mine: int = 0
         while set_mine < mine:
