@@ -34,3 +34,4 @@ At some point I will go back through it and modernize the code.
 - 02/27/2025 DWR Moved the main part of the program into a main() function.
 - 03/08/2025 DWR Some more refactoring (moved code from main to scatter_mines).
 - 03/12/2025 DWR Some more comment cleanup.
+- 03/16/2025 DWR Added code that prompts to repeat or quit. Made a new main() to call the field() and prompt functions. Also renamed a few variables.

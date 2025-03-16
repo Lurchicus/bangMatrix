@@ -97,7 +97,7 @@ def get_rows(num: list[int], node: int) -> str:
 
 def get_mines(node_: int) -> int:
     """
-    Collect mine info
+    Collect current mine info
     """
     realmine_: int = 0
     if node_ == -1:
@@ -106,34 +106,48 @@ def get_mines(node_: int) -> int:
 
 
 def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]):
-        """
-        Spread the mines around the field.
-        mine: int                - The number of mines to scatter
-        rows: int                - The depth of field
-        cols: int                - The width of the field
-        bangbox: list[list[int]] - the field where we will scatter mines
-        """
-        set_mine: int = 0
-        while set_mine < mine:
-            row_i: int = randint(0, rows-1)
-            col_i: int = randint(0, cols-1)
-            if bangbox[row_i][col_i] == 0:
-                bangbox[row_i][col_i] = -1
-                set_mine += 1
-        return set_mine
+    """
+    Spread the mines around the field.
+    mine: int                - The number of mines to scatter
+    rows: int                - The depth of field
+    cols: int                - The width of the field
+    bangbox: list[list[int]] - the field where we will scatter mines
+    """
+    set_mine: int = 0
+    while set_mine < mine:
+        row_i: int = randint(0, rows-1)
+        col_i: int = randint(0, cols-1)
+        if bangbox[row_i][col_i] == 0:
+            bangbox[row_i][col_i] = -1
+            set_mine += 1
+    return set_mine
 
 
-def main() -> None:
+def prompt():
+    """ Display prompt, error check input and re-prompt on error, return 
+    numeric value if it is okay
+    """
+    s_got: str = ""
+    its_good = False
+    while not its_good:
+        s_got = input(f"{Fore.YELLOW}Enter 'q' to quit or enter to repeat: {Fore.WHITE}")
+        if s_got.lower() != 'q' and s_got.lower() != 'x':
+            its_good = True
+        return s_got
+
+
+def field() -> None:
     """
     Determine the map dimensions and set the count of mines we will scatter over it to
     15.21 % of (rows*cols). Since I have the numbers here, caclulate the percentage of
     mine coverage we will be working with to double check the coverage.
     """
+
     rows: int = randint(6,34)
     cols: int = randint(10,62)
-    cPer: float = 15.21
+    cper: float = 15.21
     # mine count should be ~15.21% of rows*cols (or very close to it)
-    mine: int = int(round(((rows*cols) / (100/cPer)), 0))
+    mine: int = int(round(((rows*cols) / (100/cper)), 0))
     perc: float = ((mine / (rows*cols)) * 100)
 
     # Create the field
@@ -149,16 +163,16 @@ def main() -> None:
     print(f"{Fore.GREEN}Revealed map:{Fore.WHITE}")
 
     # Build and output the column header
-    firstDigit: str = f"     {Fore.YELLOW}"
-    secondDigit: str = f"     {Fore.YELLOW}"
+    first_digit: str = f"     {Fore.YELLOW}"
+    second_digit: str = f"     {Fore.YELLOW}"
     for col in range(cols):
         scol: str = str(col)
         if col < 10:
             scol = f"0{scol}"
-        firstDigit += f"{scol[0:1]} "
-        secondDigit += f"{scol[1:2]} "
-    print(f"{firstDigit}  ")
-    print(f"{secondDigit}  ")
+        first_digit += f"{scol[0:1]} "
+        second_digit += f"{scol[1:2]} "
+    print(f"{first_digit}  ")
+    print(f"{second_digit}  ")
 
     # build the top border
     orow: str = f"   {Fore.GREEN}╔{"══"*(col+1)}═╗ "
@@ -180,14 +194,14 @@ def main() -> None:
             realmine += get_mines(node)
         orow += f"{Fore.GREEN}║ "
         print(orow)
-        
+
     # Build the bottom border
     orow = f"   {Fore.GREEN}╚{"══"*(cols)}═╝ "
     print(orow)
 
     # Toss out some statistics, because we can
     nodes: int = rows*cols
-    orow = f"{Fore.GREEN}Actual mine count is {str(realmine)} of {str(nodes)} points is {str(round(perc,2))}% coverage.{Fore.WHITE}" 
+    orow = f"{Fore.GREEN}Actual mine count is {str(realmine)} of {str(nodes)} points is {str(round(perc,2))}% coverage.{Fore.WHITE}"
     print(orow)
 
     # Show stats for the entire field
@@ -202,6 +216,18 @@ def main() -> None:
     orow += f"{Fore.GREEN}7:{str(num[7])}{Fore.WHITE}({str(round((num[7] / (nodes) * 100),2))}%) "
     orow += f"{Fore.RED}8:{str(num[8])}{Fore.WHITE}({str(round((num[8] / (nodes) * 100),2))}%)"
     print(orow)
+
+
+def main() -> None:
+    """
+    Runs the field() process and prompts to see if we run again or quit.
+    """
+    field()
+    sinp = prompt()
+    while sinp != 'q' and sinp != 'x':
+        field()
+        sinp = prompt()
+
 
 if __name__ == '__main__':
     main()
