@@ -13,7 +13,7 @@ At some point I will go back through it and modernize the code.
 
 ## Dependencies
 
-- colorama import Fore, Back
+- colorama import Fore
 - random import randint
 
 ## History
@@ -35,3 +35,4 @@ At some point I will go back through it and modernize the code.
 - 03/08/2025 DWR Some more refactoring (moved code from main to scatter_mines).
 - 03/12/2025 DWR Some more comment cleanup.
 - 03/16/2025 DWR Added code that prompts to repeat or quit. Made a new main() to call the field() and prompt functions. Also renamed a few variables.
+- 03/23/2025 DWR Stripped out dead code from prompt() and removed colorama "Back" reference from readme as it's no longer used.

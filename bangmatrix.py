@@ -98,6 +98,7 @@ def get_rows(num: list[int], node: int) -> str:
 def get_mines(node_: int) -> int:
     """
     Collect current mine info
+    node: int - The contents of a single cell in the field to check for a mine
     """
     realmine_: int = 0
     if node_ == -1:
@@ -124,16 +125,12 @@ def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]):
 
 
 def prompt():
-    """ Display prompt, error check input and re-prompt on error, return 
-    numeric value if it is okay
+    """ 
+    Display prompt and return string entered
     """
     s_got: str = ""
-    its_good = False
-    while not its_good:
-        s_got = input(f"{Fore.YELLOW}Enter 'q' to quit or enter to repeat: {Fore.WHITE}")
-        if s_got.lower() != 'q' and s_got.lower() != 'x':
-            its_good = True
-        return s_got
+    s_got = input(f"{Fore.YELLOW}Enter 'q' to quit or enter to repeat: {Fore.WHITE}")
+    return s_got
 
 
 def field() -> None:
@@ -150,16 +147,16 @@ def field() -> None:
     mine: int = int(round(((rows*cols) / (100/cper)), 0))
     perc: float = ((mine / (rows*cols)) * 100)
 
-    # Create the field
+    # Create the empty field
     bangbox: list[list[int]] = [[0 for col in range(cols)] for row in range(rows)]
 
     # Scatter mines in the field
     scatter_mines(mine, rows, cols, bangbox)
 
-    # Scan the field for mines and set ajacent counts
+    # Scan the field for mines and set ajacent mine counts
     look_around(bangbox, rows, cols)
 
-    # Output the minefield
+    # Output the minefield to the screen
     print(f"{Fore.GREEN}Revealed map:{Fore.WHITE}")
 
     # Build and output the column header
