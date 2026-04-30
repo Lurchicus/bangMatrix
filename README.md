@@ -36,4 +36,7 @@ At some point I will go back through it and modernize the code.
 - 03/12/2025 DWR Some more comment cleanup.
 - 03/16/2025 DWR Added code that prompts to repeat or quit. Made a new main() to call the field() and prompt functions. Also renamed a few variables.
 - 03/23/2025 DWR Stripped out dead code from prompt() and removed colorama "Back" reference from readme as it's no longer used.
-- 04/30/2026 DWR Updated toml (uv) file - Added a description
+- 04/30/2026 DWR Updated toml (uv) file - Added a description.
+- 04/30/2026 DWR Added init for colorama (and full import). Also added return type hints to scatter_mines
+and prompt. Stripped and lowered prompt input in return. Added some comments of changes I might implement
+in the future.

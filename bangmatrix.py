@@ -8,6 +8,7 @@ just show the minefield we create.
 """
 
 from random import randint
+import colorama
 from colorama import Fore
 
 
@@ -62,6 +63,9 @@ def get_rows(num: list[int], node: int) -> str:
     """
     Build a row of the minefield and collect minefield stats
     """
+    # This would work, but I still need to deal with orow_ colors and num counts.
+    # offsets = [(-1,0),(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1)]
+    # mines = sum(1 for dr,dc in offsets if 0 <= row+dr < rows and 0 <= col+dc < cols and bangbox[row+dr][col+dc] == -1)
     orow_: str = ""
     match node:
         case -1:
@@ -107,7 +111,7 @@ def get_mines(node_: int) -> int:
     return realmine_
 
 
-def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]):
+def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]) -> int:
     """
     Spread the mines around the field.
     mine: int                - The number of mines to scatter
@@ -115,6 +119,8 @@ def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]):
     cols: int                - The width of the field
     bangbox: list[list[int]] - the field where we will scatter mines
     """
+    # positions = random.sample(range(rows*cols), mine)
+    # then map pos to (pos // cols, pos % cols)
     set_mine: int = 0
     while set_mine < mine:
         row_i: int = randint(0, rows - 1)
@@ -125,13 +131,13 @@ def scatter_mines(mine: int, rows: int, cols: int, bangbox: list[list[int]]):
     return set_mine
 
 
-def prompt():
+def prompt() -> str:
     """
     Display prompt and return string entered
     """
     s_got: str = ""
     s_got = input(f"{Fore.YELLOW}Enter 'q' to quit or enter to repeat: {Fore.WHITE}")
-    return s_got
+    return s_got.strip().lower()
 
 
 def field() -> None:
@@ -222,6 +228,7 @@ def main() -> None:
     """
     Runs the field() process and prompts to see if we run again or quit.
     """
+    colorama.init(autoreset=True)
     field()
     sinp = prompt()
     while sinp != "q" and sinp != "x":
