@@ -1,7 +1,7 @@
 [project]
 name = "bangmatrix"
 version = "0.1.0"
-description = "Add your description here"
+description = "Generate Minesweeper game boards"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
