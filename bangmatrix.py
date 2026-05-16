@@ -11,6 +11,7 @@ from random import randint
 import colorama
 from colorama import Fore
 
+rst: str = "\x1b[0m"
 
 def look_around(bangbox: list[list[int]], rows: int, cols: int) -> None:
     """
@@ -228,6 +229,9 @@ def main() -> None:
     """
     Runs the field() process and prompts to see if we run again or quit.
     """
+    
+    # print(f'{rst}\x1b[31m Am I red? ')
+    # print("boop!")
     colorama.init(autoreset=True)
     field()
     sinp = prompt()

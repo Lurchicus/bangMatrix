@@ -40,3 +40,4 @@ At some point I will go back through it and modernize the code.
 - 04/30/2026 DWR Added init for colorama (and full import). Also added return type hints to scatter_mines
 and prompt. Stripped and lowered prompt input in return. Added some comments of changes I might implement
 in the future.
+- 05/16/2026 DWR Did some experimentation doing direct ansi code writes. The \x1b[31m format works. Code is in Main and is commented out.
